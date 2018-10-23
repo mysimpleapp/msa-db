@@ -1,7 +1,7 @@
 {
-  "name": "msa-sqlite",
+  "name": "msa-db",
   "version": "0.1.0",
-  "description": "Sqlite MySimpleApp module",
+  "description": "DB MySimpleApp module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,7 +9,6 @@
   "author": "Nicolas CARREZ <nicolas.carrez@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "sequelize": "^4.39.0",
-    "sqlite3": "^4.0.2"
+    "sequelize": "^4.39.0"
   }
 }

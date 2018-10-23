@@ -1,29 +1,24 @@
 var msaDb = module.exports = Msa.module("db")
 
-// deps
-const { join } = require('path')
-
 // params
-Msa.params.db = {
-	type: "sqlite",
-	path: join(Msa.dirname, 'db.sqlite'),
-	pool: {
-		max: 5,
-		min: 0,
-		acquire: 30000,
-		idle: 10000
-	}
-}
+require('./params.js')
 
+// init sequelize ORM
 const Sequelize = require('sequelize')
-const sequelize = new Sequelize('database', null, null, {
-//	host: 'localhost',
-	dialect: 'sqlite',
-	pool: Msa.params.db.pool,
-	storage: Msa.params.db.path
-  // http://docs.sequelizejs.com/manual/tutorial/querying.html#operators
-//  operatorsAliases: false
-})
+const dbType = Msa.params.db.type
+var sequelize
+if(dbType === "sqlite") {
+	sequelize = new Sequelize('database', null, null, {
+//		host: 'localhost',
+		dialect: 'sqlite',
+		pool: Msa.params.db.pool,
+		storage: Msa.params.db.path
+		// http://docs.sequelizejs.com/manual/tutorial/querying.html#operators
+//		operatorsAliases: false
+	})
+} else {
+	throw `Unsupported DB type: ${dbType}`
+}
 
 // directories
 // var sqliteDir = Msa.params.db.sqlite.dir
