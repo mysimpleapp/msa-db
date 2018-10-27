@@ -1,5 +1,7 @@
 var msaDb = module.exports = Msa.module("db")
 
+const path = require('path')
+
 // params
 require('./params.js')
 
@@ -12,7 +14,7 @@ if(dbType === "sqlite") {
 //		host: 'localhost',
 		dialect: 'sqlite',
 		pool: Msa.params.db.pool,
-		storage: Msa.params.db.path
+		storage: path.resolve(Msa.dirname, Msa.params.db.path)
 		// http://docs.sequelizejs.com/manual/tutorial/querying.html#operators
 //		operatorsAliases: false
 	})
