@@ -13,7 +13,7 @@ module.exports = async (itf, next) => {
 				question: "Choose path to DB file",
 				defVal: "db.sqlite"
 			})
-			await itf.install("sqlite3", { dir:__dirname })
+			await itf.install("sqlite3")
 		}
 	} catch(err) { return next(err) }
 	next()

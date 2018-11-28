@@ -1,4 +1,4 @@
-var msaDb = module.exports = Msa.module("db")
+var msaDb = module.exports = new Msa.Module("db")
 
 const path = require('path')
 
