@@ -1,21 +1,21 @@
 const { join } = require('path')
 
-new Msa.ParamDef("db.type", {
+new Msa.Param("db.type", {
 	desc: "Database type",
 	choices: [ "sqlite", "mysql", "postgre" ]
 })
-new Msa.ParamDef("db.path", {
+new Msa.Param("db.path", {
 	desc: "Path to DB file (sqlite only)"
 })
-new Msa.ParamDef("db.pool.min", {
+new Msa.Param("db.pool.min", {
 	defVal: 0
 })
-new Msa.ParamDef("db.pool.max", {
+new Msa.Param("db.pool.max", {
 	defVal: 5
 })
-new Msa.ParamDef("db.pool.acquire", {
+new Msa.Param("db.pool.acquire", {
 	defVal: 10000
 })
-new Msa.ParamDef("db.pool.idle", {
+new Msa.Param("db.pool.idle", {
 	defVal: 30000
 })
