@@ -9,6 +9,11 @@
   "author": "Nicolas CARREZ <nicolas.carrez@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "sequelize": "^4.39.0"
+    "sequelize": "^4.39.0",
+    "sqlite3": "^4.0.6"
+  },
+  "msaKey": "db",
+  "msaDependencies": {
+    "user": "../msa-user"
   }
 }
