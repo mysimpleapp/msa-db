@@ -1,13 +1,13 @@
 {
-  "name": "msa-db",
+  "name": "@mysimpleapp/msa-db",
   "version": "0.1.0",
-  "description": "DB MySimpleApp module",
+  "description": "MySimpleApp core module managing DB connections",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Nicolas CARREZ <nicolas.carrez@gmail.com>",
-  "license": "MIT",
+  "license": "ISC",
   "dependencies": {
     "sequelize": "^4.39.0"
   },
