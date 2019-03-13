@@ -1,6 +1,6 @@
 {
   "name": "@mysimpleapp/msa-db",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "MySimpleApp core module managing DB connections",
   "main": "index.js",
   "scripts": {
@@ -13,6 +13,6 @@
   },
   "msaKey": "db",
   "msaDependencies": {
-    "user": "../msa-user"
+    "user": "@mysimpleapp/msa-user"
   }
 }
