@@ -1,6 +1,6 @@
 {
   "name": "@mysimpleapp/msa-db",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "MySimpleApp core module managing DB connections",
   "main": "index.js",
   "scripts": {
@@ -8,11 +8,11 @@
   },
   "author": "Nicolas CARREZ <nicolas.carrez@gmail.com>",
   "license": "ISC",
-  "dependencies": {
-    "sequelize": "^4.39.0"
-  },
   "msaKey": "db",
   "msaDependencies": {
     "user": "@mysimpleapp/msa-user"
+  },
+  "dependencies": {
+    "sqlite3": "^4.1.1"
   }
 }
