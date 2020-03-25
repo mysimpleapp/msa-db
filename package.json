@@ -11,8 +11,5 @@
   "msaKey": "db",
   "msaDependencies": {
     "user": "@mysimpleapp/msa-user"
-  },
-  "dependencies": {
-    "sqlite3": "^4.1.1"
   }
 }
