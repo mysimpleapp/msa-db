@@ -1,6 +1,10 @@
-var exp = module.exports = {}
-
 require('./params.js')
+
+const exp = module.exports = {
+	installMsaModule: async itf => {
+		await require("./install")(itf)
+	}
+}
 
 const dbType = Msa.params.db.type
 if (dbType === "sqlite") {
