@@ -4,74 +4,78 @@ const path = require('path')
 const { DbConnection } = require('./client')
 
 const SqliteConnection = exp.SqliteConnection = class extends DbConnection {
-    constructor(sqliteConn){
+    constructor(sqliteConn) {
         super()
         this.sqliteConn = sqliteConn
     }
-    getOne(query, args){
-		if(Msa.params.log_level==="DEBUG") console.log(query)
+    getOne(query, args) {
+        if (Msa.params.log_level === "DEBUG") console.log(query)
         return new Promise((ok, ko) =>
             this.sqliteConn.get(this.translateSql(query), this.translateArgs(args), (err, row) => {
-                if(err) ko(err)
+                if (err) ko(err)
                 else ok(row)
             }))
     }
-    get(query, args){
-		if(Msa.params.log_level==="DEBUG") console.log(query)
+    get(query, args) {
+        if (Msa.params.log_level === "DEBUG") console.log(query)
         return new Promise((ok, ko) =>
             this.sqliteConn.all(this.translateSql(query), this.translateArgs(args), (err, rows) => {
-                if(err) ko(err)
+                if (err) ko(err)
                 else ok(rows)
             }))
     }
-    run(query, args){
-		if(Msa.params.log_level==="DEBUG") console.log(query)
+    run(query, args) {
+        if (Msa.params.log_level === "DEBUG") console.log(query)
         return new Promise((ok, ko) =>
-            this.sqliteConn.run(this.translateSql(query), this.translateArgs(args), function(err){
-                if(err) ko(err)
+            this.sqliteConn.run(this.translateSql(query), this.translateArgs(args), function (err) {
+                if (err) ko(err)
                 else ok({ nbChanges: this.changes })
             }))
     }
-    async transaction(next){
+    async transaction(next) {
         await this.run("BEGIN TRANSACTION")
         try {
             await next()
             await this.run("COMMIT")
-        } catch(err){
+        } catch (err) {
             await this.run("ROLLBACK")
-            throw(err)
+            throw (err)
         }
     }
-    splitSql(query){
+    splitSql(query) {
         const words = []
         let curWord = ""
-        for(let c of query){
-            if(" (),=".indexOf(c) >= 0){
-                if(curWord) words.push(curWord)
+        for (let c of query) {
+            if (" (),=".indexOf(c) >= 0) {
+                if (curWord) words.push(curWord)
                 curWord = ""
                 words.push(c)
             } else {
                 curWord += c
             }
         }
-        if(curWord) words.push(curWord)
+        if (curWord) words.push(curWord)
         return words
     }
-    translateSql(query){
+    translateSql(query) {
         const words = this.splitSql(query)
-        for(let i in words){
+        for (let i = 0, len = words.length; i < len; ++i) {
             const w = words[i]
-            if(w.startsWith(':'))
-                words[i] = w.replace(':','$')
+            if (w.startsWith(':')) {
+                words[i] = w.replace(':', '$')
+            } else if ((i + 2) < len && w === "FOR" && words[i + 2] === "UPDATE") {
+                words[i] = ""
+                words[i + 2] = ""
+            }
         }
         const res = words.join('')
         return res
     }
-    translateArgs(args){
-        if(typeof args === "object" && !isArr(args)){
+    translateArgs(args) {
+        if (typeof args === "object" && !isArr(args)) {
             const res = {}
-            for(const k in args)
-                res["$"+k] = args[k]
+            for (const k in args)
+                res["$" + k] = args[k]
             return res
         }
         return args
@@ -82,7 +86,7 @@ const dbPath = path.resolve(Msa.dirname, Msa.params.db.path)
 const sqlite3 = require("sqlite3")
 const sqliteConn = new sqlite3.Database(dbPath)
 
-exp.withDb = async function(next){
+exp.withDb = async function (next) {
     await next(new SqliteConnection(sqliteConn))
 }
 

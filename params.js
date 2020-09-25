@@ -1,8 +1,6 @@
-const { join } = require('path')
-
 new Msa.Param("db.type", {
 	desc: "Database type",
-	choices: [ "sqlite", "mysql", "postgre" ]
+	choices: ["sqlite", "mysql", "postgre"]
 })
 new Msa.Param("db.path", {
 	desc: "Path to DB file (sqlite only)"

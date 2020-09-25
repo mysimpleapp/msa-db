@@ -1,15 +1,23 @@
 require('./params.js')
 
-const exp = module.exports = {
-	installMsaModule: async itf => {
-		await require("./install")(itf)
+const exp = {}
+
+function initMod() {
+	const dbType = Msa.params.db.type
+	if (dbType === "sqlite") {
+		const { withDb } = require('./sqlite')
+		exp.withDb = withDb
+	} else {
+		throw `Unsupported DB type: ${dbType}`
 	}
 }
 
-const dbType = Msa.params.db.type
-if (dbType === "sqlite") {
-	const { withDb } = require('./sqlite')
-	exp.withDb = withDb
-} else {
-	throw `Unsupported DB type: ${dbType}`
+exp.installMsaModule = async itf => {
+	await require("./install")(itf)
+	initMod()
 }
+exp.startMsaModule = () => {
+	initMod()
+}
+
+module.exports = exp
