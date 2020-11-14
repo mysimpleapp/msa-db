@@ -11,5 +11,8 @@
   "msaKey": "db",
   "msaDependencies": {
     "user": "@mysimpleapp/msa-user"
+  },
+  "dependencies": {
+    "mongodb": "^3.6.2"
   }
 }

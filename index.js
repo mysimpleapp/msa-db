@@ -1,23 +1,23 @@
 require('./params.js')
+const MongoClient = require('mongodb').MongoClient
 
 const exp = {}
 
-function initMod() {
-	const dbType = Msa.params.db.type
-	if (dbType === "sqlite") {
-		const { withDb } = require('./sqlite')
-		exp.withDb = withDb
-	} else {
-		throw `Unsupported DB type: ${dbType}`
-	}
+async function initMod() {
+	exp.db = await new Promise((ok, ko) => {
+		MongoClient.connect(`mongodb://${Msa.params.db.host}`, (err, client) => {
+			if(err) ko(err)
+			ok(client.db())
+		})
+	})
 }
 
 exp.installMsaModule = async itf => {
 	await require("./install")(itf)
-	initMod()
+	await initMod()
 }
-exp.startMsaModule = () => {
-	initMod()
+exp.startMsaModule = async () => {
+	await initMod()
 }
 
 module.exports = exp
